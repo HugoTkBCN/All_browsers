@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  google-chrome:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - CHROME_VERSION=[VERSION]
+    image: google-chrome:[VERSION]
+    container_name: chrome
+    deploy:
+      resources:
+        limits:
+          cpus: '0'
+          memory: 512M
+    environment:
+      - DISPLAY=unix$DISPLAY
+    volumes:
+      - $HOME/Downloads:/root/Downloads
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    devices:
+      - "/dev/snd"
+    networks:
+      hostnet: {}
+    privileged : true
+
+networks:
+  hostnet:
